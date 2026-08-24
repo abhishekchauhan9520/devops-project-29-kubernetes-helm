@@ -1,0 +1,35 @@
+name: Helm Chart Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: latest
+      - name: Lint chart
+        run: helm lint ./chart --strict
+      - name: Render staging
+        run: helm template staging ./chart -f ./chart/values-staging.yaml > staging.yaml
+      - name: Render production
+        run: helm template production ./chart -f ./chart/values-production.yaml > production.yaml
+      - name: Run project tests
+        run: bash tests/test_chart.sh
+      - name: Upload rendered manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-kubernetes-manifests
+          path: |
+            staging.yaml
+            production.yaml
