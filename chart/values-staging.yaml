@@ -1,0 +1,16 @@
+replicaCount: 2
+image:
+  tag: "staging"
+env:
+  - name: APP_ENV
+    value: staging
+hpa:
+  minReplicas: 2
+  maxReplicas: 5
+pdb:
+  minAvailable: 1
+ingress:
+  enabled: true
+  host: staging.example.com
+  tls:
+    enabled: false
