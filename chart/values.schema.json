@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "replicaCount": {"type": "integer", "minimum": 1},
+    "image": {
+      "type": "object",
+      "required": ["repository", "tag"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "tag": {"type": "string", "minLength": 1},
+        "pullPolicy": {"type": "string"}
+      }
+    },
+    "containerPort": {"type": "integer", "minimum": 1, "maximum": 65535},
+    "service": {
+      "type": "object",
+      "required": ["port", "targetPort"]
+    },
+    "hpa": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "minReplicas": {"type": "integer", "minimum": 1},
+        "maxReplicas": {"type": "integer", "minimum": 1}
+      }
+    }
+  },
+  "additionalProperties": true
+}
