@@ -1,0 +1,15 @@
+apiVersion: v2
+name: production-kubernetes-app
+description: Production-grade reusable Helm chart for a secure web workload
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.27.0-0"
+keywords:
+  - kubernetes
+  - helm
+  - devops
+  - production
+home: https://helm.sh/
+maintainers:
+  - name: Abhishek Chauhan
